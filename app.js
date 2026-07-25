@@ -1,43 +1,86 @@
-// 1. TAB SYSTEM SWAPPING LOGIC
-const navLinks = document.querySelectorAll('.nav-link');
-const tabContents = document.querySelectorAll('.tab-content');
+document.addEventListener('DOMContentLoaded', () => {
 
-navLinks.forEach(link => {
-    link.addEventListener('click', (e) => {
-        e.preventDefault();
-        
-        // Remove active class from all links
-        navLinks.forEach(item => item.classList.remove('active'));
-        // Add active class to clicked link
-        link.classList.add('active');
-        
-        // Hide all tabs
-        tabContents.forEach(tab => tab.classList.remove('active'));
-        
-        // Show selected tab content
-        const targetId = link.getAttribute('data-target');
-        document.getElementById(targetId).classList.add('active');
-        
-        // Scroll to top when changing tabs
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+    // ================= 1. PAGE NAVIGATION SWITCHER =================
+    const navButtons = document.querySelectorAll('.nav-btn');
+    const pages = document.querySelectorAll('.page');
+
+    navButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const targetPage = button.getAttribute('data-page');
+
+            // Update active state on buttons
+            navButtons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+
+            // Switch active page
+            pages.forEach(page => {
+                if (page.id === targetPage) {
+                    page.classList.add('active');
+                } else {
+                    page.classList.remove('active');
+                }
+            });
+
+            // Smooth scroll back to top on page change
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
     });
+
+    // ================= 2. CAROUSEL CONTROLS =================
+    const prevBtn = document.querySelector('.prev-btn');
+    const nextBtn = document.querySelector('.next-btn');
+    const carouselWrapper = document.getElementById('home-carousel');
+
+    if (carouselWrapper && prevBtn && nextBtn) {
+        const scrollAmount = 400;
+
+        nextBtn.addEventListener('click', () => {
+            carouselWrapper.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+        });
+
+        prevBtn.addEventListener('click', () => {
+            carouselWrapper.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+        });
+    }
+
+    // ================= 3. LIGHTBOX INTERACTIVITY =================
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const lightboxTitle = document.getElementById('lightbox-title');
+    const lightboxDesc = document.getElementById('lightbox-desc');
+    const lightboxClose = document.querySelector('.lightbox-close');
+    const photoCards = document.querySelectorAll('.photo-card');
+
+    photoCards.forEach(card => {
+        card.addEventListener('click', () => {
+            const fullSrc = card.getAttribute('data-full');
+            const title = card.getAttribute('data-title') || 'Untitled';
+            const desc = card.getAttribute('data-desc') || 'No description provided.';
+
+            lightboxImg.src = fullSrc;
+            lightboxTitle.textContent = title;
+            lightboxDesc.textContent = desc;
+
+            lightbox.classList.add('active');
+        });
+    });
+
+    // Close lightbox on clicking 'X' or outside the image content
+    lightboxClose.addEventListener('click', () => {
+        lightbox.classList.remove('active');
+    });
+
+    lightbox.addEventListener('click', (e) => {
+        if (e.target === lightbox) {
+            lightbox.classList.remove('active');
+        }
+    });
+
+    // Close lightbox on pressing Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+            lightbox.classList.remove('active');
+        }
+    });
+
 });
-
-
-// 2. SLOW-FADING HERO SLIDESHOW
-const slides = document.querySelectorAll('.slide');
-let currentSlide = 0;
-
-function nextSlide() {
-    // Remove active class from current slide
-    slides[currentSlide].classList.remove('active');
-    
-    // Move to next slide, wrap around to 0 if at the end
-    currentSlide = (currentSlide + 1) % slides.length;
-    
-    // Add active class to new slide
-    slides[currentSlide].classList.add('active');
-}
-
-// Change slide every 6 seconds (6000ms) for a slow, premium look
-setInterval(nextSlide, 6000);
