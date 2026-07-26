@@ -58,26 +58,7 @@
                     </div>
                 </div>
             </section>
-
-            <section class="about-grid">
-                <div class="about-bio">
-                    <h3>About the Photographer</h3>
-                    <p>I’m a student photojournalist and visual storyteller specializing in school sports coverage, community events, and atmospheric landscape photography.</p>
-                </div>
-                <div class="about-details">
-                    <div class="detail-box">
-                        <h5>Gear</h5>
-                        <p>Canon T7</p>
-                    </div>
-                    <div class="detail-box">
-                        <h5>Contact</h5>
-                        <p>chyston.studio@gmail.com</p>
-                    </div>
-                </div>
-            </section>
-        </section>
-
-        <section id="sports" class="page">
+<section id="sports" class="page">
             <header class="page-header">
                 <h2>School Sports Gallery</h2>
                 <p>High-speed action, sideline emotion, and game-day energy across basketball, football, track, and volleyball.</p>
@@ -127,26 +108,49 @@
 
         <section id="albums" class="page">
             <header class="page-header">
-                <h2>Private Client & Personal Albums</h2>
-                <p>Select a protected album below. A password is required to access the photos within.</p>
+                <h2>Private & Password-Protected Albums</h2>
+                <p>Select an album below. Enter the specific password assigned to that album to view its photo collection.</p>
             </header>
 
             <div class="albums-grid" id="album-selection">
-                <div class="album-card" data-album-id="personal-2026">
+                
+                <div class="album-card" data-album-id="personal-vault">
                     <div class="album-cover">
                         <div class="lock-icon">🔒</div>
                         <span class="photo-count">4 Photos</span>
                     </div>
                     <div class="album-info">
-                        <h3>Personal Archives 2026</h3>
-                        <p>Private personal photos & behind-the-scenes.</p>
+                        <h3>Personal Vault</h3>
+                        <p>Behind-the-scenes & unreleased personal shots.</p>
                     </div>
                 </div>
 
+                <div class="album-card" data-album-id="client-portraits">
+                    <div class="album-cover">
+                        <div class="lock-icon">🔒</div>
+                        <span class="photo-count">3 Photos</span>
+                    </div>
+                    <div class="album-info">
+                        <h3>Senior Portraits 2026</h3>
+                        <p>Private client delivery gallery.</p>
+                    </div>
                 </div>
 
+                <div class="album-card" data-album-id="football-archive">
+                    <div class="album-cover">
+                        <div class="lock-icon">🔒</div>
+                        <span class="photo-count">3 Photos</span>
+                    </div>
+                    <div class="album-info">
+                        <h3>Varsity Football Raw Selects</h3>
+                        <p>Full-game raw frame selects for coaching team.</p>
+                    </div>
+                </div>
+
+            </div>
+
             <div id="album-viewer" class="album-viewer" style="display: none;">
-                <button id="back-to-albums" class="back-btn">&larr; Back to Albums</button>
+                <button id="back-to-albums" class="back-btn">&larr; Back to Private Albums</button>
                 <div class="album-header">
                     <h2 id="opened-album-title">Album Title</h2>
                     <p id="opened-album-desc">Album description goes here.</p>
@@ -160,13 +164,13 @@
 
     <div id="password-modal" class="modal-overlay">
         <div class="modal-box">
-            <h3>🔒 Password Required</h3>
-            <p>Enter the access code to unlock this album:</p>
-            <input type="password" id="album-password-input" placeholder="Enter password...">
+            <h3>🔒 Restricted Access</h3>
+            <p id="modal-album-name">Enter the password for this album:</p>
+            <input type="password" id="album-password-input" placeholder="Enter album password...">
             <p id="password-error" class="error-msg"></p>
             <div class="modal-actions">
                 <button id="cancel-password-btn" class="modal-btn secondary">Cancel</button>
-                <button id="submit-password-btn" class="modal-btn primary">Unlock</button>
+                <button id="submit-password-btn" class="modal-btn primary">Unlock Album</button>
             </div>
         </div>
     </div>
