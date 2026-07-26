@@ -1,36 +1,91 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    // ================= 1. ALBUM DATABASE & PASSWORDS =================
-    // Default password for "personal-2026" is: secret123
+    // ================= 1. MULTIPLE ALBUMS & UNIQUE PASSWORDS =================
     const ALBUM_DATA = {
-        'personal-2026': {
-            title: 'Personal Archives 2026',
-            description: 'Private personal photos & behind-the-scenes moments.',
-            password: 'secret123', // <-- Set your album password here
+        
+        // Album 1: Personal Vault (Password: vault123)
+        'personal-vault': {
+            title: 'Personal Vault',
+            description: 'Behind-the-scenes & unreleased personal shots.',
+            password: 'vault123',
             photos: [
                 {
-                    thumb: 'https://picsum.photos/800/600?random=50',
-                    full: 'https://picsum.photos/1400/900?random=50',
-                    title: 'Behind the Lens',
-                    desc: 'Candid photo setting up gear on the field.'
+                    thumb: 'https://picsum.photos/800/600?random=101',
+                    full: 'https://picsum.photos/1400/900?random=101',
+                    title: 'Gear Setup on Sidelines',
+                    desc: 'Preparing lenses before dusk kickoff.'
                 },
                 {
-                    thumb: 'https://picsum.photos/800/600?random=51',
-                    full: 'https://picsum.photos/1400/900?random=51',
-                    title: 'Road Trip Notes',
-                    desc: 'Scouting locations in late autumn.'
+                    thumb: 'https://picsum.photos/800/600?random=102',
+                    full: 'https://picsum.photos/1400/900?random=102',
+                    title: 'Golden Hour Location Scout',
+                    desc: 'Testing exposure in pine forest clearing.'
                 },
                 {
-                    thumb: 'https://picsum.photos/800/600?random=52',
-                    full: 'https://picsum.photos/1400/900?random=52',
-                    title: 'Private Studio Session',
-                    desc: 'Testing out studio lighting setups.'
+                    thumb: 'https://picsum.photos/800/600?random=103',
+                    full: 'https://picsum.photos/1400/900?random=103',
+                    title: 'Unreleased Studio Frame',
+                    desc: 'High key strobe experiment.'
                 },
                 {
-                    thumb: 'https://picsum.photos/800/600?random=53',
-                    full: 'https://picsum.photos/1400/900?random=53',
-                    title: 'Sunset Reflections',
-                    desc: 'Personal favorite unreleased shot.'
+                    thumb: 'https://picsum.photos/800/600?random=104',
+                    full: 'https://picsum.photos/1400/900?random=104',
+                    title: 'Late Night Edit Desk',
+                    desc: 'Post-processing after game night.'
+                }
+            ]
+        },
+
+        // Album 2: Senior Portraits 2026 (Password: senior2026)
+        'client-portraits': {
+            title: 'Senior Portraits 2026',
+            description: 'Private client delivery gallery.',
+            password: 'senior2026',
+            photos: [
+                {
+                    thumb: 'https://picsum.photos/800/600?random=105',
+                    full: 'https://picsum.photos/1400/900?random=105',
+                    title: 'Courtyard Portrait',
+                    desc: 'Natural sunlight framed by brick arches.'
+                },
+                {
+                    thumb: 'https://picsum.photos/800/600?random=106',
+                    full: 'https://picsum.photos/1400/900?random=106',
+                    title: 'Varsity Jacket Edit',
+                    desc: 'Low lighting contrast portrait.'
+                },
+                {
+                    thumb: 'https://picsum.photos/800/600?random=107',
+                    full: 'https://picsum.photos/1400/900?random=107',
+                    title: 'Sunset Graduation Cap',
+                    desc: 'Backlit portrait at dusk.'
+                }
+            ]
+        },
+
+        // Album 3: Football Unedited Raw Archive (Password: football99)
+        'football-archive': {
+            title: 'Varsity Football Raw Selects',
+            description: 'Full-game raw frame selects for coaching team.',
+            password: 'football99',
+            photos: [
+                {
+                    thumb: 'https://picsum.photos/800/600?random=108',
+                    full: 'https://picsum.photos/1400/900?random=108',
+                    title: '4th Quarter Drive',
+                    desc: 'Wide shot of offensive line positioning.'
+                },
+                {
+                    thumb: 'https://picsum.photos/800/600?random=109',
+                    full: 'https://picsum.photos/1400/900?random=109',
+                    title: 'Sideline Huddle Detail',
+                    desc: 'Quarterback reviewing play sheet.'
+                },
+                {
+                    thumb: 'https://picsum.photos/800/600?random=110',
+                    full: 'https://picsum.photos/1400/900?random=110',
+                    title: 'Endzone Celebration',
+                    desc: 'Team reaction following field goal.'
                 }
             ]
         }
@@ -81,6 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // ================= 4. ALBUM PASSWORD & UNLOCK SYSTEM =================
     const albumCards = document.querySelectorAll('.album-card');
     const passwordModal = document.getElementById('password-modal');
+    const modalAlbumName = document.getElementById('modal-album-name');
     const passwordInput = document.getElementById('album-password-input');
     const passwordError = document.getElementById('password-error');
     const submitPasswordBtn = document.getElementById('submit-password-btn');
@@ -93,10 +149,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const openedAlbumDesc = document.getElementById('opened-album-desc');
     const openedAlbumPhotos = document.getElementById('opened-album-photos');
 
-    // Click on an album card to trigger prompt
+    // Click on an album card to open prompt
     albumCards.forEach(card => {
         card.addEventListener('click', () => {
             selectedAlbumId = card.getAttribute('data-album-id');
+            const albumData = ALBUM_DATA[selectedAlbumId];
+
+            if (albumData) {
+                modalAlbumName.textContent = `Enter password for "${albumData.title}":`;
+            }
+
             passwordInput.value = '';
             passwordError.textContent = '';
             passwordModal.classList.add('active');
@@ -121,7 +183,7 @@ document.addEventListener('DOMContentLoaded', () => {
             passwordModal.classList.remove('active');
             loadAlbum(selectedAlbumId);
         } else {
-            passwordError.textContent = 'Incorrect password. Please try again.';
+            passwordError.textContent = 'Incorrect password. Try again.';
         }
     }
 
@@ -158,7 +220,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             `;
 
-            // Attach lightbox handler to dynamically created photos
             photoCard.addEventListener('click', () => {
                 openLightbox(photo.full, photo.title, photo.desc);
             });
@@ -191,9 +252,7 @@ document.addEventListener('DOMContentLoaded', () => {
         lightbox.classList.add('active');
     }
 
-    // Enable lightbox for static elements on page
     document.querySelectorAll('.photo-card').forEach(card => {
-        // Skip album entry cards
         if (card.classList.contains('album-card')) return;
 
         card.addEventListener('click', () => {
