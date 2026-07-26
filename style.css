@@ -1,5 +1,5 @@
 /* ==========================================================================
-   PORTFOLIO WEBSITE - FULL DARK MODE STYLESHEET WITH PRIVATE ALBUMS
+   PORTFOLIO WEBSITE - FULL DARK MODE STYLESHEET WITH MULTIPLE PRIVATE ALBUMS
    ========================================================================== */
 
 :root {
@@ -13,7 +13,7 @@
     --accent: #ffffff;
     --font-heading: 'Playfair Display', Georgia, serif;
     --font-body: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-} 
+}
 
 * {
     box-sizing: border-box;
@@ -353,7 +353,7 @@ img {
     color: var(--text-primary);
 }
 
-/* --- PRIVATE ALBUMS COMPONENT --- */
+/* --- PRIVATE ALBUMS DIRECTORY --- */
 .albums-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -376,7 +376,7 @@ img {
 
 .album-cover {
     height: 220px;
-    background: #1c1c1c;
+    background: #181818;
     display: flex;
     flex-direction: column;
     justify-content: center;
